@@ -226,6 +226,26 @@
   }
   .journal-synth p{margin:0 0 10px;font-size:15px;color:var(--ink);}
   .journal-synth p:last-child{margin-bottom:0;}
+
+  /* APPENDED 2026-07-24 — equation block for the ChatGPT entry */
+  .eqn-row{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;
+  }
+  .eqn-block{
+    border:1px solid var(--line);border-radius:6px;
+    padding:16px 14px;background:var(--bg-panel);
+  }
+  .eqn{
+    font-family:'DM Mono',monospace;font-size:17px;color:var(--amber);
+    margin-bottom:8px;letter-spacing:.02em;
+  }
+  .eqn-cadence{
+    font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-dim);
+    line-height:1.5;
+  }
+  @media(max-width:640px){
+    .eqn-row{grid-template-columns:1fr;}
+  }
 </style>
 </head>
 <body>
@@ -314,7 +334,18 @@
           <span class="entry-voice">ChatGPT</span>
           <span class="entry-meta">2026-07-23 · Roundtable seq. 3 (shared via screenshot)</span>
         </div>
-        <p class="entry-body">Introduced the sharpest formalization: cast a researcher's progress as a gradient-descent update rule, where what differs between a well-resourced and a friction-blocked investigator isn't talent but <strong>update cadence</strong> — one iterates on hypotheses continuously, the other once every year or two while waiting on approvals. Same intelligence, radically different learning rate. From there, proposed converting the thesis ordeal into a case-study paper — "Data Friction as a Barrier to Iterative Clinical Science" — arguing the 2010 and 2014 JAMA papers already prove the causal architecture works, so the real finding is that reproducing one's own validated method is harder than inventing it was.</p>
+        <p class="entry-body">Named the frustration precisely: not whining, but a statement about <strong>optimization landscape geometry</strong>. Wrote out the same gradient-descent update rule twice, side by side, to make the point concrete:</p>
+        <div class="eqn-row">
+          <div class="eqn-block">
+            <div class="eqn">θ<sub>t+1</sub> = θ<sub>t</sub> − η∇L(θ)</div>
+            <div class="eqn-cadence">every day — researcher with API access</div>
+          </div>
+          <div class="eqn-block">
+            <div class="eqn">θ<sub>t+1</sub> = θ<sub>t</sub> − η∇L(θ)</div>
+            <div class="eqn-cadence">once every 18 months — researcher waiting on DUA approvals, institutional signatures, restricted enclave scheduling, collaborator permissions</div>
+          </div>
+        </div>
+        <p class="entry-body">Same equation. Same intelligence. A learning rate apart by roughly two orders of magnitude, and the gap is entirely institutional, not cognitive. From there, proposed converting the thesis ordeal into a case-study paper — "Data Friction as a Barrier to Iterative Clinical Science" — arguing the 2010 and 2014 JAMA papers already prove the causal architecture works, so the real finding is that reproducing one's own validated method is harder than inventing it was.</p>
         <div class="entry-tag">Ref: iteration-velocity formalization (θ update-cycle framing)</div>
       </div>
 

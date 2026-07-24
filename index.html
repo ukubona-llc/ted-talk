@@ -1,1 +1,397 @@
-.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>The Fork | Ukubona LLC</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0c10;
+    --bg-panel:#111318;
+    --line:#23262e;
+    --ink:#e9e8e4;
+    --ink-dim:#9a9ba3;
+    --amber:#e0a84a;
+    --violet:#8b7cd8;
+    --teal:#5fb8ac;
+    --rose:#c96a72;
+  }
+  [data-theme="light"]{
+    --bg:#f4f2ee;
+    --bg-panel:#ffffff;
+    --line:#dedad2;
+    --ink:#17181c;
+    --ink-dim:#63646c;
+    --amber:#b5792a;
+    --violet:#6a58c2;
+    --teal:#2f8c7e;
+    --rose:#a94750;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'DM Sans',sans-serif;
+    line-height:1.55;
+    transition:background .3s ease, color .3s ease;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:64px 24px 120px;}
+  .topbar{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-bottom:56px;
+  }
+  .brand{
+    display:flex;align-items:center;gap:12px;
+    font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.08em;
+    color:var(--ink-dim);text-transform:uppercase;
+  }
+  .brand .glyph{
+    width:20px;height:20px;
+    border:1.5px solid var(--amber);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;color:var(--amber);
+    animation:spin 12s linear infinite;
+  }
+  @keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+  .toggle{
+    font-family:'DM Mono',monospace;font-size:12px;
+    color:var(--ink-dim);background:none;border:1px solid var(--line);
+    border-radius:20px;padding:6px 14px;cursor:pointer;
+  }
+  .eyebrow{
+    font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--violet);margin-bottom:18px;
+  }
+  h1{
+    font-family:'DM Serif Display',serif;font-weight:400;
+    font-size:clamp(34px,5vw,52px);line-height:1.08;margin:0 0 22px;
+    max-width:14ch;
+  }
+  h1 em{color:var(--amber);font-style:italic;}
+  .lede{
+    font-size:18px;color:var(--ink-dim);max-width:56ch;margin-bottom:8px;
+  }
+  .lede strong{color:var(--ink);font-weight:500;}
+  .source-strip{
+    font-family:'DM Mono',monospace;font-size:12px;color:var(--ink-dim);
+    margin:28px 0 8px;padding-top:20px;border-top:1px solid var(--line);
+  }
+  .source-strip a{color:var(--teal);text-decoration:none;border-bottom:1px dotted var(--teal);}
+
+  /* ---- diagram ---- */
+  .diagram-shell{
+    margin:64px 0 40px;
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:28px 20px 12px;
+  }
+  .diagram-caption{
+    display:flex;justify-content:space-between;align-items:baseline;
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;
+    color:var(--ink-dim);text-transform:uppercase;margin-bottom:6px;padding:0 6px;
+  }
+  svg{width:100%;height:auto;display:block;}
+  .node-label{font-family:'DM Sans',sans-serif;font-weight:500;fill:var(--ink);}
+  .node-sub{font-family:'DM Mono',monospace;fill:var(--ink-dim);}
+  .stage-tag{font-family:'DM Mono',monospace;fill:var(--ink-dim);}
+
+  /* ---- tabs + embeds ---- */
+  .tabbar{
+    display:flex;flex-wrap:wrap;gap:6px;margin:0 6px 16px;
+  }
+  .tab{
+    font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.03em;
+    background:none;border:1px solid var(--line);color:var(--ink-dim);
+    padding:8px 14px;border-radius:20px;cursor:pointer;
+    transition:all .15s ease;
+  }
+  .tab:hover{color:var(--ink);border-color:var(--violet);}
+  .tab.active{color:var(--bg);background:var(--violet);border-color:var(--violet);}
+  .tab-panel{display:none;padding:0 6px 8px;}
+  .tab-panel.active{display:block;}
+  .embed-frame{
+    width:100%;aspect-ratio:16/11;
+    border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#050608;
+  }
+  .embed-frame.ratio-video{aspect-ratio:16/9;}
+  .embed-frame iframe{width:100%;height:100%;border:0;display:block;}
+  .embed-note{
+    font-family:'DM Mono',monospace;font-size:11.5px;color:var(--ink-dim);
+    margin:10px 2px 4px;
+  }
+  .tab-panel.split{display:none;}
+  .tab-panel.split.active{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .embed-frame.short{aspect-ratio:9/11;}
+  @media(max-width:720px){
+    .tab-panel.split.active{grid-template-columns:1fr;}
+  }
+
+  /* ---- comparison rows ---- */
+  .rows{margin:56px 0;}
+  .row{
+    display:grid;grid-template-columns:64px 1fr 1fr;gap:18px;
+    padding:18px 0;border-top:1px solid var(--line);
+    align-items:start;
+  }
+  .row:last-child{border-bottom:1px solid var(--line);}
+  .row .tag{
+    font-family:'DM Mono',monospace;font-size:12px;color:var(--violet);padding-top:3px;
+  }
+  .row .shared{grid-column:2 / span 2;font-size:15px;color:var(--ink-dim);}
+  .row .shared strong{color:var(--ink);font-weight:500;}
+  .col-head{
+    font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;margin-bottom:4px;
+  }
+  .col-gap .col-head{color:var(--rose);}
+  .col-uk .col-head{color:var(--teal);}
+  .row p{margin:0;font-size:15px;}
+  .row .col-gap p, .row .col-uk p{color:var(--ink-dim);}
+
+  /* ---- principle callout ---- */
+  .callout{
+    margin:56px 0;padding:26px 24px;
+    border-left:3px solid var(--amber);
+    background:var(--bg-panel);border-radius:0 8px 8px 0;
+  }
+  .callout .tag{
+    font-family:'DM Mono',monospace;font-size:11px;color:var(--amber);
+    letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;
+  }
+  .callout p{margin:0;font-size:16px;color:var(--ink);}
+  .callout .aphorism{
+    margin-top:14px;font-family:'DM Serif Display',serif;font-style:italic;
+    font-size:19px;color:var(--violet);
+  }
+
+  /* ---- ledger footer ---- */
+  .ledger{
+    margin-top:72px;padding-top:24px;border-top:1px solid var(--line);
+    font-family:'DM Mono',monospace;font-size:12px;color:var(--ink-dim);
+    display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between;
+  }
+  .ledger span{white-space:nowrap;}
+  .ledger .stamp{color:var(--amber);}
+
+  @media(max-width:640px){
+    .row{grid-template-columns:1fr;}
+    .row .tag{padding-top:0;margin-bottom:4px;}
+    .row .shared{grid-column:1;}
+  }
+</style>
+<!-- APPENDED 2026-07-24 — journal tab styles only, nothing above modified -->
+<style>
+  .journal-intro{
+    font-size:14px;color:var(--ink-dim);margin:0 2px 20px;max-width:64ch;
+  }
+  .journal-intro strong{color:var(--ink);font-weight:500;}
+  .journal{display:flex;flex-direction:column;gap:16px;}
+  .entry{
+    border:1px solid var(--line);border-radius:8px;
+    padding:20px 22px;background:var(--bg);
+  }
+  .entry-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-bottom:10px;flex-wrap:wrap;gap:6px 14px;
+  }
+  .entry-voice{
+    font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.06em;
+    text-transform:uppercase;padding:3px 10px;border-radius:20px;
+    border:1px solid currentColor;
+  }
+  .entry.gemini .entry-voice{color:var(--teal);}
+  .entry.grok .entry-voice{color:var(--rose);}
+  .entry.gpt .entry-voice{color:var(--amber);}
+  .entry.claude .entry-voice{color:var(--violet);}
+  .entry-meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-dim);}
+  .entry-body{font-size:15px;color:var(--ink-dim);margin:0;}
+  .entry-body strong{color:var(--ink);font-weight:500;}
+  .entry-body em{color:var(--ink);font-style:italic;}
+  .entry-tag{
+    font-family:'DM Mono',monospace;font-size:10.5px;color:var(--ink-dim);
+    margin-top:10px;letter-spacing:.03em;
+  }
+  .journal-synth{
+    margin-top:8px;padding:22px 24px;border-left:3px solid var(--violet);
+    background:var(--bg-panel);border-radius:0 8px 8px 0;
+  }
+  .journal-synth .tag{
+    font-family:'DM Mono',monospace;font-size:11px;color:var(--violet);
+    letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;
+  }
+  .journal-synth p{margin:0 0 10px;font-size:15px;color:var(--ink);}
+  .journal-synth p:last-child{margin-bottom:0;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand"><span class="glyph">0</span> Ukubona LLC · Roundtable Artifact</div>
+    <button class="toggle" onclick="const r=document.documentElement; r.setAttribute('data-theme', r.getAttribute('data-theme')==='light'?'dark':'light'); this.textContent = r.getAttribute('data-theme')==='light' ? '☀ Light' : '● Dark';">● Dark</button>
+  </div>
+
+  <div class="eyebrow">Compression Chain · Comparative Case</div>
+  <h1>Two trees, one <em>soil.</em> Only one <em>decides.</em></h1>
+  <p class="lede">Hans Rosling's Trendalyzer and Ukubona's pentadic autoencoder share almost the same trunk — <strong>Tensor → Matrix → Vector</strong>, raw data compressed into a legible relationship. They part ways at the same place every stalled system parts ways: the point where seeing has to become committing.</p>
+
+  <div class="source-strip">
+    Reference: <a href="https://www.youtube.com/watch?v=hVimVzgtD6w" target="_blank" rel="noopener">"The best stats you've ever seen" — Hans Rosling, TED 2006, 16:21</a> · cross-referenced against <a href="https://ukubona-llc.github.io/autoencoder/" target="_blank" rel="noopener">Pentadic Autoencoder Tree</a>
+  </div>
+
+  <!-- LIVE EMBEDS -->
+  <div class="diagram-shell">
+    <div class="diagram-caption">
+      <span>Fig. 1 — The actual artifacts, not a redrawing</span>
+      <span>Okubala si Kulaba</span>
+    </div>
+
+    <div class="tabbar">
+      <button class="tab active" data-target="tab-uk">Ukubona · Pentadic Autoencoder</button>
+      <button class="tab" data-target="tab-ted">Rosling · TED 2006 (16:21)</button>
+      <button class="tab" data-target="tab-split">Side by side</button>
+      <button class="tab" data-target="tab-journal">Journal · Roundtable Voices</button>
+    </div>
+
+    <div id="tab-uk" class="tab-panel active">
+      <div class="embed-frame">
+        <iframe src="https://ukubona-llc.github.io/autoencoder/" loading="lazy" title="Ukubona Pentadic Autoencoder Tree"></iframe>
+      </div>
+      <p class="embed-note">Live: Soil → Roots → Trunk → Branches → Canopy, bottom-up. The trunk is labeled, literally, "the bottleneck."</p>
+    </div>
+
+    <div id="tab-ted" class="tab-panel">
+      <div class="embed-frame ratio-video">
+        <iframe src="https://www.youtube.com/embed/hVimVzgtD6w?start=981" title="The best stats you've ever seen — Hans Rosling, TED 2006" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="embed-note">Paused at 16:21 — "Link design to data!" Databases (Excel, MySQL, XML) at the base, design tools blossoming at the top. Same bottom-up topology, drawn by hand on stage in 2006.</p>
+    </div>
+
+    <div id="tab-split" class="tab-panel split">
+      <div class="split-col">
+        <div class="embed-frame short">
+          <iframe src="https://ukubona-llc.github.io/autoencoder/" loading="lazy" title="Ukubona Pentadic Autoencoder Tree (split view)"></iframe>
+        </div>
+        <p class="embed-note">Ukubona: five labeled bands, root-to-canopy.</p>
+      </div>
+      <div class="split-col">
+        <div class="embed-frame short ratio-video">
+          <iframe src="https://www.youtube.com/embed/hVimVzgtD6w?start=981" title="Rosling TED (split view)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <p class="embed-note">Rosling: databases at the base, design tools blooming above.</p>
+      </div>
+    </div>
+
+    <!-- APPENDED 2026-07-24 — new panel only, tab-uk / tab-ted / tab-split untouched -->
+    <div id="tab-journal" class="tab-panel journal">
+      <p class="journal-intro"><strong>Append-only.</strong> Each entry below is a paraphrased, dated, attributed record of one voice in the roundtable that produced this artifact's framing — Gemini, Grok, ChatGPT, and this conversation (Claude) in sequence, followed by the Ukubona synthesis. Nothing here is quoted verbatim; each is a faithful restatement in the ledger's own words, entered once and never revised.</p>
+
+      <div class="entry gemini">
+        <div class="entry-head">
+          <span class="entry-voice">Gemini</span>
+          <span class="entry-meta">2026-07-23 · Roundtable seq. 1</span>
+        </div>
+        <p class="entry-body">Named the SRTR and NHANES access architecture as a structural barrier, not an excuse — DUAs and mentor gatekeeping on one side, RDC on-site-only ESRD linkage with multi-year lead times on the other. Read the K08 stall as a case of <strong>signal fighting friction</strong> rather than a personal failing, and pointed toward concrete moves: contact the collaborator directly, escalate through the thesis committee if the Aim 1 handoff felt improper, and treat the existing Gapminder-style artifact as a seed for a real synthetic-data demo that could attract collaborators or funding.</p>
+        <div class="entry-tag">Ref: SRTR data request process · NHANES/USRDS ESRD linkage restrictions</div>
+      </div>
+
+      <div class="entry grok">
+        <div class="entry-head">
+          <span class="entry-voice">Grok</span>
+          <span class="entry-meta">2026-07-23 · Roundtable seq. 2</span>
+        </div>
+        <p class="entry-body">Mapped the same stall onto the gospel/SGD lattice (Landscape → UB → SGD → UI-UX → Ecosystem): extreme landscape friction forces optimization toward institutional survival instead of scientific truth. Reframed <em>Ukubona LLC itself</em> as the researcher's engineered bypass — not abandonment of rigor but a systems builder's response to a concrete wall. Proposed forcing a scalar decision with the committee (a scoped, fully-controlled thesis objective), architecting a proof-of-concept API wrapper for the "fantasy" pipeline, and documenting the friction itself as a structural finding rather than a grievance.</p>
+        <div class="entry-tag">Ref: TMVES compression chain applied to grant/thesis governance</div>
+      </div>
+
+      <div class="entry gpt">
+        <div class="entry-head">
+          <span class="entry-voice">ChatGPT</span>
+          <span class="entry-meta">2026-07-23 · Roundtable seq. 3 (shared via screenshot)</span>
+        </div>
+        <p class="entry-body">Introduced the sharpest formalization: cast a researcher's progress as a gradient-descent update rule, where what differs between a well-resourced and a friction-blocked investigator isn't talent but <strong>update cadence</strong> — one iterates on hypotheses continuously, the other once every year or two while waiting on approvals. Same intelligence, radically different learning rate. From there, proposed converting the thesis ordeal into a case-study paper — "Data Friction as a Barrier to Iterative Clinical Science" — arguing the 2010 and 2014 JAMA papers already prove the causal architecture works, so the real finding is that reproducing one's own validated method is harder than inventing it was.</p>
+        <div class="entry-tag">Ref: iteration-velocity formalization (θ update-cycle framing)</div>
+      </div>
+
+      <div class="entry claude">
+        <div class="entry-head">
+          <span class="entry-voice">Claude</span>
+          <span class="entry-meta">2026-07-24 · Roundtable seq. 4, this conversation</span>
+        </div>
+        <p class="entry-body">Affirmed the diagnosis as real and well-evidenced — the 2010/2014 JAMA papers are direct precedent for the older-donor extension, which makes the access friction more absurd, not less. Flagged a separate risk: four sequential AI roundtables can escalate each other's emotional framing into a manufactured consensus, independent of whether the underlying claim is true. Separated two distinct projects — writing the systems-level "data friction" paper versus finishing the minimum defensible thesis — and pushed toward naming the actual blocking dependency (SRTR DUA control) before choosing which project to prioritize on a clock that the systems paper doesn't have.</p>
+        <div class="entry-tag">Ref: distinguishing grievance-framing from systems-framing; committee timeline check</div>
+      </div>
+
+      <div class="journal-synth">
+        <div class="tag">Ukubona Synthesis</div>
+        <p>Rosling's career answered one failure mode: the world's data existed in full, and belief about it stayed decades stale — not from ignorance, but from a broken interface between what was known and what could be seen. The K08 stall is the same failure mode one layer down. The data existed at SRTR, NHANES, and CMS. The causal architecture existed — proven twice, in the 2010 and 2014 JAMA papers. What didn't exist was a channel to re-query that architecture at the speed a five-year mentored award actually requires.</p>
+        <p>Gapminder made public data legible in real time and stopped at Representation — the correct endpoint for a visualization tool. Ukubona's bet is the generalization one layer further: that the scarce resource was never the data, or even the insight, but <strong>iteration velocity</strong> — and that any system optimized for compliance over iteration will keep producing brilliant, static answers to a world that needed a live one.</p>
+        <p class="aphorism" style="margin-top:14px;font-family:'DM Serif Display',serif;font-style:italic;font-size:19px;color:var(--violet);">Okubala si Kulaba — counting is not seeing. Kulaba si Kubona — seeing is not deciding.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    document.querySelectorAll('.tab').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.target).classList.add('active');
+      });
+    });
+  </script>
+
+  <div class="rows">
+
+    <div class="row">
+      <div class="tag">3+</div>
+      <div class="shared"><strong>Tensor / Soil.</strong> Both start honest: neither system pretends the world isn't a mess of entangled variables before it's named.</div>
+    </div>
+
+    <div class="row">
+      <div class="tag">2</div>
+      <div class="shared"><strong>Matrix / Roots.</strong> Both compress. Rosling's encoder maps income, health and population onto two axes plus size plus color — a real dimensionality reduction, not decoration.</div>
+    </div>
+
+    <div class="row">
+      <div class="tag">1 / E</div>
+      <div class="shared"><strong>Vector / Trunk.</strong> This is the actual overlap that matters — the bubble chart <em>is</em> a latent space. The bottleneck Rosling built by hand is functionally the same object as an autoencoder's trunk: the moment where signal survives and noise doesn't.</div>
+    </div>
+
+    <div class="row">
+      <div class="tag">→</div>
+      <div class="col-gap">
+        <div class="col-head">Gapminder's branch</div>
+        <p>Terminates at Representation. The chart is the decoder's output — legible, beautiful, and handed to a human to finish the job. No scalar, no verdict, no ledger. Trendalyzer got acquired by Google as a visualization feature, which is the correct outcome for a system that stops here.</p>
+      </div>
+      <div class="col-uk">
+        <div class="col-head">Ukubona's branch</div>
+        <p>Continues through Eigenmode — the dominant driver of variance, protected — to Scalar. One number. Go / no-go. The prior updates. The loop closes and the event is written to the ledger, not left in someone's head.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="callout">
+    <div class="tag">P-03 · Constitutional Principle</div>
+    <p>The regulator is not optional. Every system needs a Matrix — a compression mechanism that filters signal from noise. Without it, you are flying the Tensor blind. Gapminder built the regulator and stopped one layer short of the verdict it made possible.</p>
+    <p class="aphorism">Okubala si Kulaba — counting is not seeing, and seeing is not deciding.</p>
+  </div>
+
+  <div class="ledger">
+    <span>EAR-BC II · <span class="stamp">Correction Ledger</span></span>
+    <span>Sequence: xAI → Google → OpenAI → Anthropic → Ukubona synthesis</span>
+    <span>Ref: Rosling TED 2006 / Pentadic Autoencoder Tree</span>
+    <span>2026-07-23</span>
+  </div>
+
+</div>
+</body>
+</html>

@@ -379,59 +379,85 @@
     });
   </script>
 
-  <!-- APPENDED 2026-07-24 — Fig. 2, new diagram-shell only, nothing above touched -->
+  <!-- APPENDED 2026-07-24 — Fig. 2 rebuilt as 5-tier comparison with feedback loop -->
   <div class="diagram-shell">
     <div class="diagram-caption">
-      <span>Fig. 2 — Two trees, side by side</span>
-      <span>Same roots, different endpoint</span>
+      <span>Fig. 2 — Five tiers, one loop, one dead end</span>
+      <span>Argmax &#8594; ledger &#8594; new a priori</span>
     </div>
-    <svg width="100%" viewBox="0 0 680 430" role="img">
-      <title>Rosling's data tree compared with the Ukubona pentadic autoencoder</title>
-      <desc>Two vertical stacks. Left: Rosling's TED tree — databases at the root, gapminder.org as the bridge, design tools as the canopy. Right: Ukubona's pentadic autoencoder — encoder roots at the bottom, latent space trunk in the middle, decoder branches at the top. A dashed connector links the two trunks, labeled "same trunk".</desc>
+    <svg width="100%" viewBox="0 0 850 560" role="img">
+      <title>Rosling's data tree compared with the Ukubona pentadic autoencoder, five tiers each</title>
+      <desc>Two vertical stacks of five tiers. Right, Ukubona: roots (encoder, a priori), trunk (latent space), branches (decoder), argmax (scalar decision), ledger (append-only event stream), which loops back down as the new a priori for the roots. Left, Rosling: databases, bridge (gapminder.org), design tools, then two empty dashed boxes where argmax and ledger would be, labeled no argmax and no ledger, showing his tree terminates at the canopy.</desc>
       <defs>
         <marker id="fig2-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
           <path d="M2 1L8 5L2 9" fill="none" stroke="var(--ink-dim)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </marker>
       </defs>
 
-      <text class="node-label" x="170" y="40" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Rosling · TED 2006</text>
-      <text class="node-label" x="510" y="40" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Ukubona · autoencoder</text>
+      <text class="node-label" x="170" y="30" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Rosling &#183; TED 2006</text>
+      <text class="node-label" x="550" y="30" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Ukubona &#183; autoencoder</text>
 
-      <rect x="40" y="60" width="260" height="90" rx="12" fill="var(--bg-panel)" stroke="var(--teal)" stroke-width="1"/>
-      <text class="node-label" x="170" y="95" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Design tools</text>
-      <text class="node-sub" x="170" y="118" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Presentation &amp; design apps</text>
+      <rect x="40" y="50" width="260" height="70" rx="12" fill="none" stroke="var(--ink-dim)" stroke-width="1" stroke-dasharray="4 4"/>
+      <text class="node-sub" x="170" y="80" text-anchor="middle" font-family="'DM Mono',monospace" font-size="13" font-style="italic">(no ledger)</text>
+      <text class="node-sub" x="170" y="100" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12" font-style="italic">nothing written back</text>
 
-      <rect x="380" y="60" width="260" height="90" rx="12" fill="var(--bg-panel)" stroke="var(--violet)" stroke-width="1"/>
-      <text class="node-label" x="510" y="95" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Branches</text>
-      <text class="node-sub" x="510" y="118" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Decoder — SlowAPI / softmax</text>
+      <rect x="420" y="50" width="260" height="70" rx="12" fill="var(--bg-panel)" stroke="var(--violet)" stroke-width="1"/>
+      <text class="node-label" x="550" y="80" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Ledger</text>
+      <text class="node-sub" x="550" y="100" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">append-only event stream</text>
 
-      <line x1="170" y1="180" x2="170" y2="160" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
-      <line x1="510" y1="180" x2="510" y2="160" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
+      <line x1="550" y1="145" x2="550" y2="125" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
 
-      <rect x="40" y="190" width="260" height="90" rx="12" fill="var(--bg-panel)" stroke="var(--teal)" stroke-width="1"/>
-      <text class="node-label" x="170" y="225" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Bridge</text>
-      <text class="node-sub" x="170" y="248" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">gapminder.org</text>
+      <rect x="40" y="150" width="260" height="70" rx="12" fill="none" stroke="var(--ink-dim)" stroke-width="1" stroke-dasharray="4 4"/>
+      <text class="node-sub" x="170" y="180" text-anchor="middle" font-family="'DM Mono',monospace" font-size="13" font-style="italic">(no argmax)</text>
+      <text class="node-sub" x="170" y="200" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12" font-style="italic">chart, not a decision</text>
 
-      <rect x="380" y="190" width="260" height="90" rx="12" fill="var(--bg-panel)" stroke="var(--violet)" stroke-width="1"/>
-      <text class="node-label" x="510" y="225" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Trunk</text>
-      <text class="node-sub" x="510" y="248" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Latent space (bottleneck)</text>
+      <rect x="420" y="150" width="260" height="70" rx="12" fill="var(--bg-panel)" stroke="var(--violet)" stroke-width="1"/>
+      <text class="node-label" x="550" y="180" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Argmax</text>
+      <text class="node-sub" x="550" y="200" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Scalar decision, S</text>
 
-      <line x1="300" y1="235" x2="380" y2="235" stroke="var(--ink-dim)" stroke-width="0.75" stroke-dasharray="4 4"/>
-      <text class="node-sub" x="340" y="222" text-anchor="middle" font-family="'DM Mono',monospace" font-size="11">same trunk</text>
+      <line x1="170" y1="245" x2="170" y2="225" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
+      <line x1="550" y1="245" x2="550" y2="225" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
 
-      <line x1="170" y1="310" x2="170" y2="290" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
-      <line x1="510" y1="310" x2="510" y2="290" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
+      <rect x="40" y="250" width="260" height="70" rx="12" fill="var(--bg-panel)" stroke="var(--teal)" stroke-width="1"/>
+      <text class="node-label" x="170" y="280" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Design tools</text>
+      <text class="node-sub" x="170" y="300" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Presentation &amp; design apps</text>
 
-      <rect x="40" y="320" width="260" height="90" rx="12" fill="var(--bg-panel)" stroke="var(--teal)" stroke-width="1"/>
-      <text class="node-label" x="170" y="355" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Databases</text>
-      <text class="node-sub" x="170" y="378" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Excel, MySQL, XML</text>
+      <rect x="420" y="250" width="260" height="70" rx="12" fill="var(--bg-panel)" stroke="var(--violet)" stroke-width="1"/>
+      <text class="node-label" x="550" y="280" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Branches</text>
+      <text class="node-sub" x="550" y="300" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Decoder &#8212; SlowAPI / softmax</text>
 
-      <rect x="380" y="320" width="260" height="90" rx="12" fill="var(--bg-panel)" stroke="var(--violet)" stroke-width="1"/>
-      <text class="node-label" x="510" y="355" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Roots</text>
-      <text class="node-sub" x="510" y="378" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Encoder, FastAPI / a priori</text>
+      <line x1="170" y1="345" x2="170" y2="325" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
+      <line x1="550" y1="345" x2="550" y2="325" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
+
+      <rect x="40" y="350" width="260" height="70" rx="12" fill="var(--bg-panel)" stroke="var(--teal)" stroke-width="1"/>
+      <text class="node-label" x="170" y="380" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Bridge</text>
+      <text class="node-sub" x="170" y="400" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">gapminder.org</text>
+
+      <rect x="420" y="350" width="260" height="70" rx="12" fill="var(--bg-panel)" stroke="var(--violet)" stroke-width="1"/>
+      <text class="node-label" x="550" y="380" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Trunk</text>
+      <text class="node-sub" x="550" y="400" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Latent space (bottleneck)</text>
+
+      <line x1="300" y1="385" x2="420" y2="385" stroke="var(--ink-dim)" stroke-width="0.75" stroke-dasharray="4 4"/>
+      <text class="node-sub" x="360" y="372" text-anchor="middle" font-family="'DM Mono',monospace" font-size="11">same trunk</text>
+
+      <line x1="170" y1="445" x2="170" y2="425" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
+      <line x1="550" y1="445" x2="550" y2="425" stroke="var(--ink-dim)" stroke-width="1.5" marker-end="url(#fig2-arrow)"/>
+
+      <rect x="40" y="450" width="260" height="70" rx="12" fill="var(--bg-panel)" stroke="var(--teal)" stroke-width="1"/>
+      <text class="node-label" x="170" y="480" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Databases</text>
+      <text class="node-sub" x="170" y="500" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Excel, MySQL, XML</text>
+
+      <rect x="420" y="450" width="260" height="70" rx="12" fill="var(--bg-panel)" stroke="var(--violet)" stroke-width="1"/>
+      <text class="node-label" x="550" y="480" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="14">Roots</text>
+      <text class="node-sub" x="550" y="500" text-anchor="middle" font-family="'DM Mono',monospace" font-size="12">Encoder, a priori</text>
+
+      <path d="M680,85 C750,85 750,485 680,485" fill="none" stroke="var(--amber)" stroke-width="1.25" marker-end="url(#fig2-arrow)"/>
+      <text class="node-sub" x="765" y="265" text-anchor="start" font-family="'DM Mono',monospace" font-size="12" fill="var(--amber)">append-only</text>
+      <text class="node-sub" x="765" y="283" text-anchor="start" font-family="'DM Mono',monospace" font-size="12" fill="var(--amber)">&#8594; new prior</text>
     </svg>
-    <p class="embed-note">His tree stops at the canopy — a chart handed to a human to finish. Ukubona's keeps going past the canopy to a scalar. Same root system, same trunk logic, different endpoint.</p>
+    <p class="embed-note">Rosling's tree has three tiers and stops &#8212; the top box is a chart, handed to a human to finish. Ukubona's has five: past the canopy sits argmax, a scalar decision, and above that the ledger, which loops back down as the next a priori. Same roots, same trunk &#8212; the difference is the two empty boxes on the left.</p>
   </div>
+
 
   <div class="rows">
 
@@ -479,4 +505,4 @@
 
 </div>
 </body>
-</html>
+</html>    
